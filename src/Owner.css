@@ -1,0 +1,33 @@
+*{
+    background-color: rgb(249,250,251);
+}
+
+.container{
+    padding-top: 30px;
+}
+.main1{
+    margin-right: 20px;
+}
+.main2 {
+    margin-left: 20px;
+}
+.main12{
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+.main11{
+    height: 200px;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+.main21{
+    background-color: yellow;
+    height: 150px;
+}
+.main22{
+    margin-top: 20px;
+}
+.text-muted{
+    color: #6f768a;
+}
