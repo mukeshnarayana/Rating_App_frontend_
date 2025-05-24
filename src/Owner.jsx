@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react' 
 import Navbar from './components/Navbar/Nvbar'
 import './Owner.css'
-import profileImage from './assets/photo pic.jpg'
+import profileImage from './assets/profile.jpeg'
 import { LockFill,ShopWindow,StarFill } from 'react-bootstrap-icons'
 import Footer from './components/Footer/Footer'
 
@@ -24,6 +24,7 @@ export default function Owner() {
              return () => clearTimeout(timer)
          }
      }, [success])
+
      useEffect(()=>{
          const fetchdata = async()=>{
              try{
@@ -54,6 +55,7 @@ export default function Owner() {
          }
          fetchdata()
      },[])
+     
      useEffect(()=>{
         const fetchuserinfo = async()=>{
             try{
@@ -71,7 +73,7 @@ export default function Owner() {
                 if(data.success){
                     setUserinfo(data)
                 }else{
-                    setError(data.message || 'Failed to load user info')
+                    setSuccess(data.message || 'Failed to load user info')
                 }
             }catch(error){
                 setError('Error fetching user info')
@@ -147,15 +149,15 @@ export default function Owner() {
                                 height="80"
                                 style={{ display: 'block' }}
                             />
-                            <h5 className="mb-0">{data.name}</h5>
-                            <small className="text-muted">{data.role}</small>
-                            <p className="text-muted mb-0">{data.email}</p>
+                            <h5 className="mb-0" style={{backgroundColor: '#ffff'}}>{data.name}</h5>
+                            <small className="text-muted" style={{backgroundColor: '#ffff'}}>{data.role}</small>
+                            <p className="text-muted mb-0" style={{backgroundColor: '#ffff'}}>{data.email}</p>
                         </div>
                         {error && <div className="alert alert-danger">{error}</div>}
                         {success && <div className="alert alert-success">{success}</div>}
                         <div className='main12 px-4 py-3'>
-                            <form onSubmit={handleUpdatePassword}>
-                                <h6> <LockFill size={18} className="me-1" />Change Password</h6>
+                            <form onSubmit={handleUpdatePassword} style={{backgroundColor: '#ffff'}}>
+                                <h6 style={{backgroundColor: '#ffff'}}> <LockFill size={18} className="me-1" style={{backgroundColor: '#ffff'}}/>Change Password</h6>
                                 <input 
                                     type="password" 
                                     className="form-control my-3" 
@@ -192,50 +194,50 @@ export default function Owner() {
                     </div>
                     <div className="col-md-6 main2">
                         <div className='container p-3  bg-white'>
-                            <div className="d-flex justify-content-between align-items-start flex-wrap">
+                            <div className="d-flex justify-content-between align-items-start flex-wrap" style={{backgroundColor: '#ffff'}}>
                                 
                                 {/* Left: Store Title and Description */}
-                                <div>
-                                <h5 className="d-flex align-items-center">
-                                    <ShopWindow size={18} className="me-2" />
+                                <div style={{backgroundColor: '#ffff'}}>
+                                <h5 className="d-flex align-items-center" style={{backgroundColor: '#ffff'}}>
+                                    <ShopWindow size={18} className="me-2" style={{backgroundColor: '#ffff'}}/>
                                     {info.store_details?.storename || 'No Store Name'}
                                 </h5>
-                                <h6 className='text-muted'>See info and overall performance</h6>
+                                <h6 className='text-muted' style={{backgroundColor: '#ffff'}}>See info and overall performance</h6>
                                 </div>
                                 
                                 {/* Right: Ratings */}
-                                <div className="d-flex">
-                                <div className="me-4 text-end">
-                                    <h6>Average Rating</h6>
-                                    <h4 className="mb-0">{info.store_details?.average_rating} <StarFill size={20} className="text-dark" /></h4>
+                                <div className="d-flex" style={{backgroundColor: '#ffff'}}>
+                                <div className="me-4 text-end" style={{backgroundColor: '#ffff'}}>
+                                    <h6 style={{backgroundColor: '#ffff'}}>Average Rating</h6>
+                                    <h4 className="mb-0" style={{backgroundColor: '#ffff'}}>{info.store_details?.average_rating}  <StarFill size={20} className="text-dark" style={{backgroundColor: '#ffff'}}/></h4>
                                 </div>
-                                <div className="text-end">
-                                    <h6>Total Ratings</h6>
-                                    <h4 className="mb-0">{info.store_details?.total_ratings}</h4>
+                                <div className="text-end"style={{backgroundColor: '#ffff'}}>
+                                    <h6 style={{backgroundColor: '#ffff'}}>Total Ratings</h6>
+                                    <h4 className="mb-0" style={{backgroundColor: '#ffff'}}>{info.store_details?.total_ratings}</h4>
                                 </div>
                                 </div>
 
                             </div>
                             {/* Store Address Below */}
                             <hr />
-                            <div>
-                                <h6 className="fw-bold">{info.store_details?.storename}</h6>
-                                <p className="text-muted mb-0">
+                            <div style={{backgroundColor: '#ffff'}}>
+                                <h6 className="fw-bold" style={{backgroundColor: '#ffff'}}>{info.store_details?.storename}</h6>
+                                <p className="text-muted mb-0" style={{backgroundColor: '#ffff'}}>
                                    {info.store_details?.storeaddress}
                                 </p>
                             </div>
                     </div>
                     <div className='main22'>
                         <div className=' p-3 bg-white'>
-                             <div className='d-flex justify-content-between align-items-end flex-wrap'>
+                             <div className='d-flex justify-content-between align-items-end flex-wrap'style={{backgroundColor: '#ffff'}}>
                                
-                                <div className='d-flex align-items-center'>
-                                   <h6 className='pt-2'>User Ratings For My Store</h6>
+                                <div className='d-flex align-items-center'style={{backgroundColor: '#ffff'}}>
+                                   <h6 className='pt-2' style={{backgroundColor: '#ffff'}}>User Ratings For My Store</h6>
                                 </div>
                                 
                                 <div className='d-flex'>
-                                 <div className='text-end'>
-                                     <h6 className='pt-2 text-muted'>showing all Ratings</h6>
+                                 <div className='text-end' style={{backgroundColor: '#ffff'}}>
+                                     <h6 className='pt-2 text-muted'style={{backgroundColor: '#ffff'}}>showing all Ratings</h6>
                                  </div>
                              </div>
                              </div>

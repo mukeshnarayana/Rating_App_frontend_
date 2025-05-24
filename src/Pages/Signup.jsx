@@ -42,17 +42,17 @@ export default function Signup() {
         <>
           <div className='main'>
             <div className='submain'>
-                <div className='signup'>
-                    <h5><PersonPlus size={20} className="me-2" />Signup</h5>
+                <div className='signup' style={{backgroundColor: '#ffff'}}>
+                    <h5 style={{backgroundColor: '#ffff'}}><PersonPlus size={20} className="me-2" style={{backgroundColor: '#ffff'}}/>Signup</h5>
                 </div> 
                 {error && <div className="alert alert-danger">{error}</div>}
-                <form onSubmit={handleSignup}>
+                <form onSubmit={handleSignup} style={{backgroundColor: '#ffff'}}>
                     <input className="form-control my-3" type='text' placeholder='Name' value={name} onChange={(e)=> setName(e.target.value)} required/>
                     <input className= "form-control my-3" type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required/>
                     <input className= "form-control my-3" type='text' placeholder='Address' value={address} onChange={(e) => setAddress(e.target.value)} required/>
                     <input className= "form-control my-3" type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} required/>
                     <select 
-                        className="form-control my-3" 
+                        className="form-control my-3"   
                         value={role} 
                         onChange={(e) => setRole(e.target.value)} 
                         required
