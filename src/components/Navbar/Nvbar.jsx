@@ -79,6 +79,7 @@ export default function Navbar ({role}) {
       // Redirect to login page
       window.location.href = '/login';
    }
+   if(!user) return <div>Loading user profile.....</div>
 
      return (
         <>

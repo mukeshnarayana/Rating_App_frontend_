@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import Navbar from './components/Navbar/Nvbar'
 import { FaSearch, FaStar} from 'react-icons/fa'
 import Footer from './components/Footer/Footer'
+import { Modal } from 'react-bootstrap'
 
 export default function User (){
     const[oldpassword,setOldpassword] = useState('')
@@ -14,20 +15,42 @@ export default function User (){
     const [searchQuery, setSearchQuery] = useState('')
     const [rating, setRating] = useState(0)
     const [userRatings, setUserRatings] = useState([])
+    const [showProfileModal, setShowProfileModal] = useState(false)
+    const [editingStoreId, setEditingStoreId] = useState(null)
+    const [updateRating, setUpdateRating] = useState(0)
+
+    const handleClose = () => setShowProfileModal(false);
+    const handleShow = (storeId) => {
+        setEditingStoreId(storeId);
+        const currentRating = userRatings.find(r => r.storeid === storeId)?.rating || 0;
+        setUpdateRating(currentRating);
+        setShowProfileModal(true);
+    };
 
     useEffect(()=>{
         fetchAllStores()
         fetchUserRatings()
     },[])
+    
+
+    useEffect(()=>{
+        if(error){
+            const timer = setTimeout(()=>{
+                setError('')
+            },3000)
+            return(()=> clearTimeout(timer))
+        }
+    },[error])
 
     useEffect(()=>{
         if(success){
             const timer = setTimeout(()=>{
-                setSuccess()
+                setSuccess('')
             },3000)
             return(()=> clearTimeout(timer))
         }
-    })
+    },[success])
+
     const handleUpdatePassword = async(e) =>{
         e.preventDefault()
         setError('')
@@ -188,6 +211,35 @@ export default function User (){
         filterStores(value);
     };
 
+    const handleUpdateRating = async () => {
+        try {
+            const token = localStorage.getItem('token')
+            const response = await fetch(`http://localhost:3050/ratings/updaterating/${editingStoreId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': token
+                },
+                body: JSON.stringify({
+                    rating: updateRating
+                })
+            })
+            const result = await response.json()
+            if(result.success) {
+                setSuccess(result.message || 'Rating updated successfully')
+                // Refresh both stores and user ratings
+                fetchAllStores()
+                fetchUserRatings()
+                handleClose()
+            } else {
+                setError(result.message || 'Failed to update rating')
+            }
+        } catch(error) {
+            console.error('Error updating rating:', error)
+            setError('Error updating rating')
+        }
+    }
+
     return (
         <>
          <Navbar role="user"/>
@@ -268,7 +320,7 @@ export default function User (){
                                         Your Rating: <FaStar style={{ backgroundColor: '#ffff' }} /> {
                                             userRatings.find(r => r.storeid === store.id)?.rating || 'Not rated'
                                         }{' '}
-                                        <button className="btn btn-outline-secondary btn-sm">Edit</button>
+                                        <button className="btn btn-outline-secondary btn-sm" onClick={() => handleShow(store.id)}>Edit</button>
                                         </h6>
                                     </div>
                                     <div className="d-flex align-items-center justify-content-end gap-2" style={{ backgroundColor: '#ffff' }}>
@@ -293,6 +345,38 @@ export default function User (){
              </div>
              <Footer/>
           </div>
+
+          <Modal
+            show={showProfileModal}
+            onHide={handleClose}
+            centered
+            className="profile-modal"
+            dialogClassName="modal-dialog modal-dialog-centered"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Edit The Rating</Modal.Title>
+              {error && <div className="alert alert-danger">{error}</div>}
+              {success && <div className="alert alert-success">{success}</div>}
+            </Modal.Header>
+            <Modal.Body>
+              <div className="mb-3">
+                <label className="form-label">Select New Rating:</label>
+                <select 
+                  className="form-select" 
+                  value={updateRating} 
+                  onChange={(e) => setUpdateRating(Number(e.target.value))}
+                >
+                  {[1, 2, 3, 4, 5].map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="text-end">
+                <button className="btn btn-secondary me-2" onClick={handleClose}>Cancel</button>
+                <button className="btn btn-primary" onClick={handleUpdateRating}>Update Rating</button>
+              </div>
+            </Modal.Body>
+          </Modal>
         </>
     )
 }
