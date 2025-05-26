@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {PersonPlus} from 'react-bootstrap-icons'
-import './signup.css'
+import './Signup.css'
 
 export default function Signup() {
    const [name, setName] = useState('')
